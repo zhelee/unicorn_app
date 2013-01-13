@@ -1,27 +1,27 @@
-namespace :sunspot do
-  task :reindex do
-    run "bundle exec rake sunspot:solr:reindex"
-  end
-
-  task :setup do
-    run "mkdir -p #{shared_path}/solr"
-    run "RAILS_ENV=production bundle exec rake sunspot:solr:start"
-    create_solr_link
-    reindex
-  end
-
-  %w{start stop}.each do |state|
-    task state do
-      run "bundle exec rake sunspot:solr:#{state}"
-    end
-  end
-
-  task :create_solr_link do
-    run "rm #{previous_release}/solr"
-    run "ln -s #{shared_path}/solr #{current_path}/solr"
+namespace :deploy do
+  task :setup_solr_data_dir do
+    run "mkdir -p #{shared_path}/solr/data"
   end
 end
-
-# consider to check whether model has been changed
-after "deploy:restart", "sunspot:reindex"
-after "deploy:restart", "sunspot:create_solr_link"
+ 
+namespace :solr do
+  desc "start solr"
+  task :start, :roles => :app, :except => { :no_release => true } do 
+    run "cd #{current_path} && RAILS_ENV=production bundle exec sunspot-solr start \
+      --port=8983 --data-directory=#{shared_path}/solr/data --pid-dir=#{shared_path}/pids"
+  end
+  desc "stop solr"
+  task :stop, :roles => :app, :except => { :no_release => true } do 
+    run "cd #{current_path} && RAILS_ENV=production bundle exec sunspot-solr stop \
+      --port=8983 --data-directory=#{shared_path}/solr/data --pid-dir=#{shared_path}/pids"
+  end
+  desc "reindex the whole database"
+  task :reindex, :roles => :app do
+    stop
+    run "rm -rf #{shared_path}/solr/data"
+    start
+    run "cd #{current_path} && RAILS_ENV=production bundle exec rake sunspot:solr:reindex"
+  end
+end
+ 
+after 'deploy:setup', 'deploy:setup_solr_data_dir'

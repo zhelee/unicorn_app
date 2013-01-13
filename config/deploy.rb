@@ -4,6 +4,12 @@ set :rvm_string, "ruby-1.9.3-p327"
 require 'capistrano/maintenance'
 require "bundler/capistrano"
 require "rvm/capistrano"
+require 'cape'
+
+Cape do
+  # Create Capistrano recipes for all Rake tasks.
+  mirror_rake_tasks :sunspot
+end
 
 load "deploy/recipes/base"
 load "deploy/recipes/nginx"
