@@ -126,7 +126,7 @@ setup () {
   export PID=$RAILS_ROOT/tmp/pids/unicorn.pid
   export OLD_PID="$PID.oldbin"
  
-  CMD="rvmsudo -u ${APP_USER} ${UNICORN} -E ${RAILS_ENV} -c ${RAILS_ROOT}/config/unicorn.rb -D"
+  CMD="rvmsudo -u ${APP_USER} ${UNICORN} -E ${RAILS_ENV} -c ${UNICORN_CONFIG} -D"
   return 0
 }
  
