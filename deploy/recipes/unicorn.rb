@@ -8,9 +8,11 @@ namespace :unicorn do
   end
 
   task :update_init_script do
-    run "#{sudo} mkdir -p #{shared_path}/config"
-    template "unicorn.erb", "#{shared_path}/config/unicorn.rb"
-    run "ln -s #{shared_path}/config/unicorn.rb #{current_path}/config/unicorn.rb"
+    link_unicorn
+    unicorn_service
+  end
+
+  task :unicorn_service do
     template "unicorn.init.erb", "/tmp/unicorn_#{application}"
     run "chmod +x /tmp/unicorn_#{application}"
     run "#{sudo} mv /tmp/unicorn_#{application} /etc/init.d/unicorn_#{application}"
@@ -31,15 +33,20 @@ namespace :unicorn do
 
   desc "create rvm bin wrapper"
   task :create_rvm_wrapper do
-    run "rvm wrapper ruby-1.9.3-p327 bootup unicorn_rails && mkdir -p #{shared_path}/bin && mv /usr/local/rvm/bin/bootup_unicorn_rails #{shared_path}/bin"
+    run "rvm wrapper ruby-1.9.3-p327 bootup unicorn_rails &&  \
+        mkdir -p #{shared_path}/bin && \
+        mv /usr/local/rvm/bin/bootup_unicorn_rails #{shared_path}/bin"
     link_rvm_wrapper
   end
 
   task :link_rvm_wrapper do
+    run "mkdir -p #{current_path}/bin"
     run "ln -s #{shared_path}/bin #{current_path}/bin"
   end
 
   task :link_unicorn do
+    run "#{sudo} mkdir -p #{shared_path}/config"
+    template "unicorn.erb", "#{shared_path}/config/unicorn.rb"
     run "ln -s #{shared_path}/config/unicorn.rb #{current_path}/config/unicorn.rb"
   end
 end
