@@ -21,3 +21,13 @@ set :repository,  "git://github.com/zhelee/unicorn_app.git"
 set :branch, :master
 
 after "deploy:restart", "deploy:cleanup"
+
+namespace :nginx do
+  task :setup do
+    run "#{sudo} rm -rf /etc/nginx/sites-available/unicorn_app.conf"
+    run "#{sudo} ln -s /var/www/current/config/nginx.conf /etc/nginx/sites-available/unicorn_app.conf"
+    run "#{sudo} service nginx restart"
+  end
+end
+
+after "deploy:restart", "nginx:setup"
