@@ -1,3 +1,6 @@
+= form_tag "" do
+  = text_field_tag :search
+  = submit_tag "Search"
 ul
   - @posts.each do |post|
     li= link_to post.title, post_path(post)
