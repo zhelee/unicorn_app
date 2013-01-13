@@ -1,6 +1,7 @@
 namespace :unicorn do
   task :setup do
-    update_script
+    update_init_script
+    update_conf
     run "#{sudo} update-rc.d -f unicorn_#{application} defaults"
   end
 
@@ -21,7 +22,7 @@ namespace :unicorn do
   %w{start stop restart}.each do |state|
     desc "unicron #{state}"
     task state do
-      "#{sudo} service unicorn_#{application} #{state}"
+      run "#{sudo} service unicorn_#{application} #{state}"
     end
   end
 end

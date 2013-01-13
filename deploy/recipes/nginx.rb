@@ -4,7 +4,7 @@ namespace :nginx do
   end
   %w{start stop restart}.each do |state|
     task state do
-      "#{sudo} service nginx #{state}"
+      run "#{sudo} service nginx #{state}"
     end
   end
 end
