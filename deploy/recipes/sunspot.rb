@@ -5,7 +5,7 @@ namespace :sunspot do
 
   task :setup do
     run "mkdir -p #{shared_path}/solr"
-    run "RAILS_ENV=production rails g sunspot_rails:install"
+    run "RAILS_ENV=production bundle exec rails g sunspot_rails:install"
     run "RAILS_ENV=production bundle exec rake sunspot:solr:start"
     create_solr_link
   end
