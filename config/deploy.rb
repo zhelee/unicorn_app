@@ -15,7 +15,7 @@ load "deploy/recipes/base"
 load "deploy/recipes/nginx"
 load "deploy/recipes/unicorn"
 load "deploy/recipes/sunspot"
-load "deploy/recipes/maintenance"
+load "deploy/recipes/log"
 
 set :application, "unicorn_app"
 set :deploy_to, "/var/www"
