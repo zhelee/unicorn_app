@@ -29,11 +29,7 @@ namespace :unicorn do
 
   desc "create rvm bin wrapper"
   task :create_rvm_wrapper do
-    run <<-EOF
-      rvm wrapper ruby-1.9.3-p327 bootup unicorn_rails"
-      mkdir -p #{shared_path}/bin
-      mv /usr/local/rvm/bin/bootup_unicorn_rails #{shared_path}/bin
-    EOF
+    run "rvm wrapper ruby-1.9.3-p327 bootup unicorn_rails && mkdir -p #{shared_path}/bin && mv /usr/local/rvm/bin/bootup_unicorn_rails #{shared_path}/bin"
     link_rvm_wrapper
   end
 
@@ -43,4 +39,5 @@ namespace :unicorn do
 end
 
 after "deploy:setup", "unicorn:setup"
+before "deploy:restart", "unicorn:link_rvm_wrapper"
 after "deploy:restart", "unicorn:restart"
