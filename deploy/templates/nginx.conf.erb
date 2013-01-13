@@ -1,5 +1,5 @@
 upstream unicorn_unicorn_app {
-  server unix:<%= current_path %>/tmp/sockets/unicorn.unicorn_app.sock fail_timeout=0;
+  server unix:<%= shared_path %>/sockets/unicorn_unicorn_app.sock fail_timeout=0;
 }
 
 server {
@@ -11,7 +11,7 @@ server {
     proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
     proxy_set_header Host $http_host;
     proxy_redirect off;
-    proxy_pass http://unicor_unicorn_app;
+    proxy_pass http://unicorn_unicorn_app;
   }
 
   error_page 500 502 503 504 /500.html;
