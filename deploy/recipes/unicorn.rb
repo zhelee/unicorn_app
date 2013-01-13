@@ -38,8 +38,13 @@ namespace :unicorn do
   task :link_rvm_wrapper do
     run "ln -s #{shared_path}/bin #{current_path}/bin"
   end
+
+  task :link_unicorn do
+    run "ln -s #{shared_path}/config/unicorn.rb #{current_path}/config/unicorn.rb"
+  end
 end
 
 after "deploy:setup", "unicorn:setup"
 before "deploy:restart", "unicorn:link_rvm_wrapper"
+before "deploy:restart", "unicorn:link_unicorn"
 after "deploy:restart", "unicorn:restart"
