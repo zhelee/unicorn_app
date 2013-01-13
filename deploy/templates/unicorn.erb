@@ -1,5 +1,6 @@
 working_directory "<%= current_path %>"
-pid "<%= current_path %>/tmp/pids/unicorn.pid"
+pid_path = "<%= current_path"%>/tmp/pids"
+pid "#{pid_path}/unicorn.pid"
 
 # Preload our app for more speed
 preload_app true
