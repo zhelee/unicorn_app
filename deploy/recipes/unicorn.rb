@@ -8,7 +8,7 @@ namespace :unicorn do
   end
 
   task :update_init_script do
-    link_unicorn
+    setup_unicorn_config
     unicorn_service
   end
 
@@ -38,13 +38,12 @@ namespace :unicorn do
         mv /usr/local/rvm/bin/bootup_unicorn_rails #{shared_path}/bin"
   end
 
-  task :link_unicorn do
+  task :setup_unicorn_config do
     run "#{sudo} mkdir -p #{shared_path}/config"
     template "unicorn.erb", "#{shared_path}/config/unicorn.rb"
-    run "ln -s #{shared_path}/config/unicorn.rb #{current_path}/config/unicorn.rb"
   end
 end
 
 after "deploy:setup", "unicorn:setup"
-before "deploy:restart", "unicorn:link_unicorn"
+before "deploy:restart", "unicorn:setup_unicorn_config"
 after "deploy:restart", "unicorn:restart"
