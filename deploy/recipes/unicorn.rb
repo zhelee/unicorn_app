@@ -1,5 +1,6 @@
 namespace :unicorn do
   task :setup do
+    run "mkdir -p #{shared_path}/sockets"
     create_rvm_wrapper
     update_init_script
     update_conf
@@ -9,6 +10,7 @@ namespace :unicorn do
   task :update_init_script do
     run "#{sudo} mkdir -p #{shared_path}/config"
     template "unicorn.erb", "#{shared_path}/config/unicorn.rb"
+    run "ln -s #{shared_path}/config/unicorn.rb #{current_path}/config/unicorn.rb"
     template "unicorn.init.erb", "/tmp/unicorn_#{application}"
     run "chmod +x /tmp/unicorn_#{application}"
     run "#{sudo} mv /tmp/unicorn_#{application} /etc/init.d/unicorn_#{application}"
