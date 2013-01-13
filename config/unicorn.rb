@@ -1,8 +1,8 @@
-working_directory "/vagrant"
-pid "/vagrant/tmp/pids/unicorn.pid"
-stderr_path "/vagrant/log/unicorn.log"
-stdout_path "/vagrant/log/unicorn.log"
+working_directory "/var/www/current"
+pid "/var/www/current/tmp/pids/unicorn.pid"
+stderr_path "/var/www/current/log/unicorn.log"
+stdout_path "/var/www/current/log/unicorn.log"
 
-listen "/tmp/unicorn.todo.sock"
+listen "/tmp/unicorn.unicorn_app.sock"
 worker_processes 2
 timeout 30

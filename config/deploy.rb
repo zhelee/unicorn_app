@@ -5,7 +5,7 @@ require "bundler/capistrano"
 require "rvm/capistrano"
 
 set :application, "unicorn_app"
-set :deploy_to, "/vagrant/www"
+set :deploy_to, "/var/www"
 set :deploy_via, :remote_cache
 
 default_run_options[:pty] = true
