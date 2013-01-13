@@ -33,8 +33,12 @@ namespace :unicorn do
       rvm wrapper ruby-1.9.3-p327 bootup unicorn_rails"
       mkdir -p #{shared_path}/bin
       mv /usr/local/rvm/bin/bootup_unicorn_rails #{shared_path}/bin
-      ln -s #{shared_path}/bin #{current_path}/bin
     EOF
+    link_rvm_wrapper
+  end
+
+  task :link_rvm_wrapper do
+    run "ln -s #{shared_path}/bin #{current_path}/bin"
   end
 end
 
