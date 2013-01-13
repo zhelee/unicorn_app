@@ -7,6 +7,7 @@ require "rvm/capistrano"
 load "deploy/recipes/base"
 load "deploy/recipes/nginx"
 load "deploy/recipes/unicorn"
+load "deploy/recipes/maintenance"
 
 set :application, "unicorn_app"
 set :deploy_to, "/var/www"
@@ -23,5 +24,7 @@ set :use_sudo, false
 set :scm, :git
 set :repository,  "git://github.com/zhelee/unicorn_app.git"
 set :branch, :master
+
+set :maintenance_template_path, File.expand_path("../../deploy/templates/maintenance.html.erb", __FILE__)
 
 after "deploy:restart", "deploy:cleanup"
