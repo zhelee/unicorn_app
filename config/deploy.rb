@@ -8,6 +8,7 @@ require "rvm/capistrano"
 load "deploy/recipes/base"
 load "deploy/recipes/nginx"
 load "deploy/recipes/unicorn"
+load "deploy/recipes/sunspot"
 load "deploy/recipes/maintenance"
 
 set :application, "unicorn_app"
