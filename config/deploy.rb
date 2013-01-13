@@ -1,6 +1,7 @@
 set :rvm_type, :system
 set :rvm_string, "ruby-1.9.3-p327"
 
+require 'capistrano/maintenance'
 require "bundler/capistrano"
 require "rvm/capistrano"
 
