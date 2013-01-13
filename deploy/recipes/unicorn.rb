@@ -39,11 +39,6 @@ namespace :unicorn do
     link_rvm_wrapper
   end
 
-  task :link_rvm_wrapper do
-    run "mkdir -p #{current_path}/bin"
-    run "ln -s #{shared_path}/bin #{current_path}/bin"
-  end
-
   task :link_unicorn do
     run "#{sudo} mkdir -p #{shared_path}/config"
     template "unicorn.erb", "#{shared_path}/config/unicorn.rb"
