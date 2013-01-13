@@ -16,3 +16,5 @@
 *.swo
 *.swp
 db/unicorn_app_development
+solr
+log
