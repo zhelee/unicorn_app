@@ -1,5 +1,6 @@
 namespace :unicorn do
   task :setup do
+    create_rvm_wrapper
     update_init_script
     update_conf
     run "#{sudo} update-rc.d -f unicorn_#{application} defaults"
@@ -24,6 +25,16 @@ namespace :unicorn do
     task state do
       run "#{sudo} service unicorn_#{application} #{state}"
     end
+  end
+
+  desc "create rvm bin wrapper"
+  task :create_rvm_wrapper do
+    run <<-EOF
+      rvm wrapper ruby-1.9.3-p327 bootup unicorn_rails"
+      mkdir -p #{shared_path}/bin
+      mv /usr/local/rvm/bin/bootup_unicorn_rails #{shared_path}/bin
+      ln -s #{shared_path}/bin #{current_path}/bin
+    EOF
   end
 end
 
