@@ -4,9 +4,9 @@
 #   Ensure the SQLite 3 gem is defined in your Gemfile
 #   gem 'sqlite3'
 development:
-  adapter: postgresql
+  adapter: sqlite3
   encoding: unicode
-  database: unicorn_app_development
+  database: db/unicorn_app_development
   pool: 5
   timeout: 5000
 
