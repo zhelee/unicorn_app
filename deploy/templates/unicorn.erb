@@ -1,0 +1,8 @@
+working_directory "<%= current_path %>"
+pid "<%= current_path %>/tmp/pids/unicorn.pid"
+stderr_path "<%= shared_path %>/log/unicorn_stderr.log"
+stdout_path "<%= shared_path %>/log/unicorn_stdout.log"
+
+listen "<%= shared_path %>/sockets/unicorn.unicorn_app.sock"
+worker_processes 2
+timeout 30

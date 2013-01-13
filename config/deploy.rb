@@ -4,6 +4,10 @@ set :rvm_string, "ruby-1.9.3-p327"
 require "bundler/capistrano"
 require "rvm/capistrano"
 
+load "deploy/recipes/base"
+load "deploy/recipes/nginx"
+load "deploy/recipes/unicorn"
+
 set :application, "unicorn_app"
 set :deploy_to, "/var/www"
 set :deploy_via, :remote_cache
@@ -27,6 +31,12 @@ namespace :nginx do
     run "#{sudo} rm -rf /etc/nginx/sites-enabled/unicorn_app.conf"
     run "#{sudo} ln -s /var/www/current/config/nginx.conf /etc/nginx/sites-enabled/unicorn_app.conf"
     run "#{sudo} service nginx restart"
+  end
+end
+
+namespace :unicorn do
+  task :setup do
+  
   end
 end
 
